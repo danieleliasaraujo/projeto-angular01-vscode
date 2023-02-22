@@ -1,0 +1,103 @@
+Documentação:
+https://angular.io/cli
+
+Intalando o Node e cli:
+node: https://nodejs.org/en/
+cli: npm install -g @angular/cli
+
+Para verificar a versão e detalhes da instalação.
+ng --help
+
+criando primeito projeto:
+dentro da pasta: ng new meu-primeiro-projeto
+- SCSS
+
+
+criação do projeto:
+PS C:\00 - Daniel\cursos online\02 Udemy\Angular\CURSO ANGULAR> ng new app-list
+? Would you like to add Angular routing? Yes
+? Which stylesheet format would you like to use? SCSS   [ https://sass-lang.com/documentation/syntax#scss                ]
+
+
+criando uma interface: "ng g interface /module/home/model/TaskList"
+------------------------------------------------------------------
+
+- Ciclo de vida Angular
+Hoje vamos ver o que é o lifecycle hook e como usar, porém precisamos entender um pouco do ciclo de vida (lifecycle) do Angular.
+
+Vamos pensar no ciclo de vida como o que conhecemos mesmo, nascemos, vivemos e morremos, o Angular também trabalha desta forma, usamos várias fases desde criação até a destruição do componente ou o que quer que seja.
+
+E não necessariamente ao carregar a aplicação todos os ciclos de vida são ativados ao mesmo tempo, podemos chamar um componente ao realizar determinada ação e assim dar início ao ciclo de vida dele. Então o Angular nos fornece ganchos (Hooks) para lidar com essas situações, e a ordem de execução é a seguinte:
+
+ngOnInit: é executado uma vez quando o componente é inicializado;
+
+ngOnChanges: executado também uma vez na criação do componente e toda vez que ele sofrer alguma mudança;
+
+ngDoCheck: executado a cada mudança que o ngOnChange não detecta;
+
+ngOnDestroy: executado na destruição do componente.
+
+Além desses existem outros quatros hooks dentro do ngDoCheck:
+
+ngAfterContentInit: sempre que um conteúdo vindo de uma fonte externa do componente é inserido;
+
+ngAfterContentChecked: quando o conteúdo externo é verificado;
+
+ngAfterViewInit: executado logo após os dados dos filhos e do próprio componente ser inicializado;
+
+ngAfterViewChecked: sempre que é detectado uma alteração do conteúdo é chamado esse cara.
+
+
+----------------------------------- brincando com app.componet.ts Primeiro projeto:
+
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, SimpleChanges } from '@angular/core';
+
+/*DoCheck,AfterContentInit,AfterContentChecked,AfterViewInit, AfterViewChecked*/
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <app-title *ngIf="destruir"></app-title>
+    <br>
+    <button (click)="destruirComponente()">"Destruir Componente - title"</button>
+    <br>
+    <button (click)="retornaComponente()">"Retornar Componente - title"</button>
+    <br>
+    {{valor}}
+    <button (click)="adicionar()">"Adicionar"</button>
+    
+    <router-outlet></router-outlet>
+    `
+})
+export class AppComponent implements OnInit, DoCheck,AfterContentInit,AfterContentChecked,AfterViewInit, AfterViewChecked {
+  public valor: number = 1;
+
+  /* Ceiado para testar a destruição de um componente */
+  public destruir: boolean = true;
+
+  constructor(){}
+
+  public destruirComponente(){
+    this.destruir = false;
+  }
+
+  public retornaComponente(){
+    this.destruir = true;
+  }
+
+  public adicionar(): number{
+    return this.valor +=1
+  }
+
+  ngOnInit(): void {}
+
+  ngDoCheck(): void {console.log("ngDoCheck")}
+  ngAfterContentInit(): void {console.log("ngAfterContentInit")}
+  ngAfterContentChecked(): void {console.log("ngAfterContentChecked")}
+  ngAfterViewInit(): void {console.log("ngAfterViewInit")}
+  ngAfterViewChecked(): void {console.log("ngAfterViewChecked")}
+}
+-------------------------------------------------------------------------------------
+
+
+

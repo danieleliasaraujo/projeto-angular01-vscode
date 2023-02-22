@@ -1,0 +1,56 @@
+<br>
+
+<hr>
+
+<h2>Diretivas *ngIf</h2>
+<p *ngIf="condition; else elseBlock">== TRUE ==</p>
+<ng-template #elseBlock>
+    <p>
+        False
+    </p>
+</ng-template>
+
+<hr>
+
+<p *ngIf="conditionClick">
+    True
+</p>
+
+<p *ngIf="!conditionClick">
+    False
+</p>
+
+<button (click)="onClick()">Clicar</button>
+
+<hr>
+
+<h2>Diretivas *ngFor</h2>
+
+<ul>
+    <li *ngFor="let item of listaNomes; index as i; first as isFirst" (click)="deletarNomeLista(i)" style="cursor: pointer;">
+        <span *ngIf="isFirst" style="color: rgb(84, 158, 158);">[{{i}}]. {{item.nome}} - idade = {{item.idade}} </span>
+        <span *ngIf="!isFirst">[{{i}}]. {{item.nome}} - idade = {{item.idade}} </span>
+    </li>
+</ul>
+
+<button (click)="adicionarNomeLista()">Adiconar novo nome</button>
+
+<br>
+
+<h2>Diretivas *ngSwitch</h2>
+<input type="text" [(ngModel)]="escolhaNome">
+
+<div [ngSwitch]="escolhaNome">
+    <p *ngSwitchCase = "'daniel'">
+        Daniel
+    </p>
+    <p *ngSwitchCase = "'luana'">
+        Luana
+    </p>    
+    <p *ngSwitchDefault>
+        Nome não encontrado!
+    </p>        
+    
+</div>
+
+
